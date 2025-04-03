@@ -1,0 +1,89 @@
+*{
+    font-family : ' comic sans ms' , cursive , sans-serif ;
+    font-size : 20px ;
+    font-weight : 400 ;
+
+}
+
+
+h1{
+    font-size: 30px;
+    font-weight: bold;
+
+}
+
+
+a{
+    color: pink;
+    font-weight: 600;
+    
+}
+
+
+a:visited{
+    color: purple;
+    font-weight: 600;
+
+}
+
+
+label{
+    font-weight: 600;
+}
+
+.button{
+   border-radius: 5px;
+}
+
+/*
+utility classes
+*/
+
+.block{
+    display: block;
+}
+
+.justify-between{
+    justify-content: space-between;
+
+}
+
+.gap-5px{
+    gap: 5px;
+
+}
+
+.p-x-20px{
+    padding: 0 20px;
+
+}
+
+.m-t-20px{
+    margin-top: 20px;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex-col{
+    flex-direction: column;
+}
+
+.align-center{
+    align-items: center;
+}
+
+/*components
+*/
+
+.black-button{
+    color: white;
+    background-color: rgb(15, 14, 14);
+    font-weight: 100;
+    
+}
+
+.w-250px{
+    width: 250px;
+}
