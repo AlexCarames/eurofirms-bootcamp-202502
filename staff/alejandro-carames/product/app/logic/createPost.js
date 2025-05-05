@@ -1,0 +1,22 @@
+import {data} from "../data"
+export const createPost = (image, text) => {
+    if (typeof image !=="string") throw new Error("invalid image type")
+        if (!image.startsWith("http")) throw new Error("invalid image format")
+            if (typeof text !=="string") throw new Error("invalid text type")
+                if (text.length < 1) throw new Error("invalid text length")
+                    let postsCount = data.getPostCount();
+                postsCount++; 
+                const post = {
+                    id: "post-"+postsCount,
+                    author: data.getUserId(),
+                    image,
+                    text,
+                    date: new Date().toLocaleDateString("es-es",{weekday:"long",day:"numeric", month:"long", year:"numeric"}),
+                    likes: [],
+                };
+                const posts= data.getPosts();
+                posts.push(post);
+                data.setPosts(posts);
+                data.setPostCount(postsCount);
+                
+}
