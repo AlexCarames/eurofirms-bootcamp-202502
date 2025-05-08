@@ -17,11 +17,15 @@ users.push({
     userName: "peterpan",
     password: "123456789"
 });
+
 data.setUsers(users);
 data.setUsersCount(usersCount);
+
 const posts = [];
 let postsCount = 0
+
 postsCount++
+
 posts.push({
     id: "post-" + postsCount,
     author: users[0].id,
