@@ -1,6 +1,14 @@
-import {data} from "../data"
-export const registerUser= (name, email, username, password) => {
+import { data } from '../data/index.js'
 
+/**
+ * Registers a user in the system.
+ * 
+ * @param {string} name The user name.
+ * @param {string} email The user e-mail.
+ * @param {string} username The user username.
+ * @param {string} password The user password.
+ */
+export const registerUser = (name, email, username, password) => {
     if (typeof name !== 'string') throw new Error('invalid name type')
     if (name.length < 1) throw new Error('invalid name min length')
     if (name.length > 30) throw new Error('invalid name max length')
@@ -17,23 +25,24 @@ export const registerUser= (name, email, username, password) => {
     if (password.length < 8) throw new Error('invalid password min length')
     if (password.length > 20) throw new Error('invalid password max length')
 
-    const users= data.getUsers()
-    for (var i = 0; i < users.length; i++) {
-        var user = users[i]
-        if (user.email === email || user.username === username) throw new Error('user already exists')
-    }
+    const users = data.getUsers()
 
-   let usersCount = data.getUsersCount()
-   usersCount++
-   users.push({
-    id:"user-"+ usersCount, 
-    name: name, 
-    email: email,
-    username: username,
-    password: password,
+    const user = users.find(user => user.email === email || user.username === username)
+
+    if (user) throw new Error('user already exists')
+
+    let usersCount = data.getUsersCount()
+
+    usersCount++
+
+    users.push({
+        id: 'user-' + usersCount,
+        name: name,
+        email: email,
+        username: username,
+        password: password
     })
 
-    data.setUsersCount(usersCount);
-    data.setUsers(users);
-
+    data.setUsers(users)
+    data.setUsersCount(usersCount)
 }
