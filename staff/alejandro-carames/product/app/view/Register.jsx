@@ -1,36 +1,60 @@
-export const Register = () => {
-    console.log('Register -> render')
+import { logic } from '../logic'
 
-    return <div className="p-20px"> 
-        <i>Logo</i>
+export const Login = ({ onRegisterClicked, onUserLoggedIn }) => {
+    const handleRegisterClick = () => onRegisterClicked()
 
-        <h1>Register</h1>
+    const handleLoginSubmit = event => {
+        event.preventDefault()
 
-        <form className="flex flex-col gap-20px">
-            <div className="flex flex-col gap-10px">
-                <label htmlFor="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="your full name"/>
-            </div>
+        const form = event.target
 
-            <div className="flex flex-col gap-10px">
-                <label htmlFor="email">E-mail</label>
-                <input type="email" id="email" placeholder="your email"/>
-                </div>
+        const username = form.username.value
+        const password = form.password.value
 
-                <div className="flex flex-col gap-10px">
+        try {
+            logic.loginUser(username, password)
+                .then(() => {
+                    form.reset()
+
+                    onUserLoggedIn()
+                })
+                .catch(error => {
+                    console.error(error)
+
+                    alert(error.message)
+                })
+        } catch (error) {
+            console.error(error)
+
+            alert(error.message)
+        }
+    }
+
+    console.log('Login -> render')
+
+    return <div className="p-5">
+        <i className="text-2xl">Logo</i>
+
+        <div className="mt-2">
+            <h1 className="text-xl">Login</h1>
+
+            <form className="flex flex-col gap-4" onSubmit={handleLoginSubmit}>
+                <div className="flex flex-col gap">
                     <label htmlFor="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="your username"/>
+                    <input className="border-2 px-1" type="text" id="username" name="username" placeholder="your username" />
                 </div>
 
-                <div className="flex flex-col gap-10px">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="your password" />
+                <div className="flex flex-col gap">
+                    <label htmlFor="password">password</label>
+                    <input className="border-2 px-1" type="password" id="password" name="password" placeholder="your password" />
                 </div>
 
                 <div className="flex justify-between">
-                    <a href="#">Login</a>
-                    <button className="black-button" type="submit">Register</button>
-                    </div >
-        </form >
-    </div >
+                    <a className="underline" href="#" onClick={handleRegisterClick}>Register</a>
+
+                    <button className="bg-black text-white px-2" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
 }

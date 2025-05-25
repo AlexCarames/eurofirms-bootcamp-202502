@@ -1,28 +1,42 @@
-const loginUser = (username, password) => {
+import { data } from '../data'
 
-    if (typeof username !== 'string') throw new Error('Nombre de usuario invalido, prueba otra vez')
-    if (username.length < 3) throw new Error('Nombre de usuario demasiado corto')
-    if (username.length > 20) throw new Error('Tu nombre de usuario es demasiado largo, prueba con otro mas corto')
+/**
+ * Logs a user in the system.
+ * 
+ * @param {string} username The user username.
+ * @param {string} password The user password.
+ */
+export const loginUser = (username, password) => {
+    if (typeof username !== 'string') throw new Error('invalid username type')
+    if (username.length < 3) throw new Error('invalid username min length')
+    if (username.length > 20) throw new Error('invalid username max length')
 
-    if (typeof password !== 'string') throw new Error('La contraseña es invalida, prueba con otra')
-    if (password.length < 8) throw new Error('Tu contraseña es demasiado corta, prueba otra vez')
-    if (password.length > 20) throw new Error('Tu contraseña es demasiado larga, te has pasado')
+    if (typeof password !== 'string') throw new Error('invalid password type')
+    if (password.length < 8) throw new Error('invalid password min length')
+    if (password.length > 20) throw new Error('invalid password max length')
 
-    let user
+    return fetch('http://localhost:8080/users/auth', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    })
+        .catch(error => { throw new Error('connection error') })
+        .then(response => {
+            const { status } = response
 
-    for (let i = 0; i < users.length; i++) {
+            if (status === 200)
+                return response.json()
+                    .catch(error => { throw new Error('json error') })
+                    .then(userId => data.setUserId(userId))
 
-        const _user = users[i]
+            return response.json()
+                .catch(error => { throw new Error('json error') })
+                .then(body => {
+                    const { error, message } = body
 
-        if (_user.username === username) {
-            user = _user
-
-            break
-        }
-    }
-
-    if (user === undefined) throw new Error('Tu usuario no existe, igual que tu novia ;)')
-
-    if (user.password !== password) throw new Error('Tus credenciales son erroneas, como tu inteligencia')
-
+                    throw new Error(message)
+                })
+        })
 }

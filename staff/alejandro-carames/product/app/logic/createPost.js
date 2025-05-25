@@ -1,32 +1,38 @@
-import { data } from "../data";
+import { data } from '../data'
+
+/**
+ * Creates a post.
+ * 
+ * @param {string} image The post image url.
+ * @param {string} text The post text.
+ */
 export const createPost = (image, text) => {
-  if (typeof image !== "string") throw new Error("invalid image type");
-  if (!image.startsWith("http")) throw new Error("invalid image format");
-  if (typeof text !== "string") throw new Error("invalid text type");
-  if (text.length < 1) throw new Error("invalid text length");
-  let postsCount = data.getPostCount();
+    if (typeof image !== 'string') throw new Error('invalid image type')
+    if (!image.startsWith('http')) throw new Error('invalid image format')
 
-  postsCount++;
+    if (typeof text !== 'string') throw new Error('invalid text type')
+    if (text.length < 1) throw new Error('invalid min text length')
 
-  const post = {
-    id: "post-" + postsCount,
-    author: data.getUserId(),
-    image,
-    text,
-    date: new Date().toLocaleDateString("es-es", {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    }),
-    likes: [],
-  };
+    return fetch('http://localhost:8080/posts', {
+        method: 'POST',
+        headers: {
+            Authorization: 'Basic ' + data.getUserId(),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ image, text })
+    })
+        .catch(error => { throw Error('connection error') })
+        .then(response => {
+            const { status } = response
 
-  const posts = data.getPosts();
+            if (status === 201) return
 
-    posts.push(post);
-  
-    data.setPosts(posts);
-  
-    data.setPostCount(postsCount);
-};
+            return response.json()
+                .catch(error => { throw new Error('json error') })
+                .then(body => {
+                    const { error, message } = body
+
+                    throw new Error(message)
+                })
+        })
+}

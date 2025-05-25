@@ -1,43 +1,32 @@
-import { data } from '../data/index.js'
+import { data } from '../data'
 
 /**
- * Removes a post by id from database.
+ * Removes a post.
  * 
- * @param {string} userId The requester user id.
- * @param {string} postId The post id to remove.
+ * @param {string} postId The post id.
  */
-export const removePost = (userId, postId) => {
-    if (typeof userId !== 'string') throw new Error('invalid userId type')
-    if (userId.length < 6) throw new Error('invalid userId length')
-
+export const removePost = postId => {
     if (typeof postId !== 'string') throw new Error('invalid postId type')
     if (postId.length < 6) throw new Error('invalid postId length')
 
-    // verify user exists by userId
-    // if user not found then throw error
-    // verify post exists by postId
-    // if post not found then throw error
-    // verify post belongs tu user (user is athor of post)
-    // if post does not belong to user then throw error
-    // otherwise, delete post from database
+    return fetch('http://localhost:8080/posts/' + postId, {
+        method: 'DELETE',
+        headers: {
+            Authorization: 'Basic ' + data.getUserId()
+        }
+    })
+        .catch(error => { throw new Error('connection error') })
+        .then(response => {
+            const { status } = response
 
-    const users = data.getUsers()
+            if (status === 204) return
 
-    const user = users.find(user => user.id === userId)
+            return response.json()
+                .catch(error => { throw new Error('json error') })
+                .then(body => {
+                    const { error, message } = body
 
-    if (!user) throw new Error('user not found')
-
-    const posts = data.getPosts()
-
-    const postIndex = posts.findIndex(post => post.id === postId)
-
-    if (postIndex < 0) throw new Error('post not found')
-
-    const post = posts[postIndex]
-
-    if (post.author !== userId) throw new Error('user is not author of post')
-
-    posts.splice(postIndex, 1)
-
-    data.setPosts(posts)
+                    throw new Error(message)
+                })
+        })
 }
