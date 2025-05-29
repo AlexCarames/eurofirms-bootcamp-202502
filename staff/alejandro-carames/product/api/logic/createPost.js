@@ -1,4 +1,4 @@
-import { data } from "../data";
+import { data } from "../data/index.js";
 
 export const createPost = (image, text) => {
   if (typeof image !== "string") throw new Error("invalid image type");
