@@ -4,7 +4,7 @@ import { removePost } from './removePost.js'
 connect('mongodb://localhost:27017/test')
     .then(() => {
         try {
-            return removePost('6831e7a7fd98fd111ae2800d', '6831d56b39462bcec83f3b76')
+            return removePost('683761c9b4629e917e6c4bd0', '683dff220e7c41c756c3212d')
                 .then(() => console.log('post removed'))
                 .catch(error => console.error(error))
         } catch (error) {

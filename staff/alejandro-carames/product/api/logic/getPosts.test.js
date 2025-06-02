@@ -4,7 +4,7 @@ import { getPosts } from './getPosts.js'
 connect('mongodb://localhost:27017/test')
     .then(() => {
         try {
-            return getPosts('683a0322553623b7794171e3')
+            return getPosts('683761c9b4629e917e6c4bd0')
                 .then(posts => console.log('posts', posts))
                 .catch(error => console.error(error))
         } catch (error) {
