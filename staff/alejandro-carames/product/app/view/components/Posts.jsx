@@ -9,9 +9,16 @@ export const Posts = () => {
 
     useEffect(() => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error =>{
+                    console.error(error)
+                    alert(error.message)
+                })
+            
 
-            setPosts(posts)
         } catch (error) {
             alert(error.message)
         }
@@ -19,9 +26,17 @@ export const Posts = () => {
 
     const handlePostDeleted = () => {
         try {
-            const posts = logic.getPosts()
+            logic.getPosts()
+                .then(posts => {
+                    setPosts(posts)
+                })
+                .catch(error => {
+                    console.error(error)
+                    alert(error.message)
+                })
+//const posts = logic.getPosts()
+//setPosts(posts)
 
-            setPosts(posts)
         } catch (error) {
             alert(error.message)
         }

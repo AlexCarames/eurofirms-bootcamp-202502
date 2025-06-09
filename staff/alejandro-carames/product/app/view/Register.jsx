@@ -1,22 +1,24 @@
 import { logic } from '../logic'
 
-export const Login = ({ onRegisterClicked, onUserLoggedIn }) => {
-    const handleRegisterClick = () => onRegisterClicked()
+export const Register  = ({ onLoginClicked, onUserRegistered  }) => {
+    const handleLoginClick = () => onLoginClicked()
 
-    const handleLoginSubmit = event => {
+    const handleRegisterSubmit = event => {
         event.preventDefault()
 
         const form = event.target
 
+        const name = form.name.value
+        const email = form.email.value
         const username = form.username.value
         const password = form.password.value
 
         try {
-            logic.loginUser(username, password)
+            logic.registerUser(name, email, username, password)
                 .then(() => {
                     form.reset()
 
-                    onUserLoggedIn()
+                    onUserRegistered()
                 })
                 .catch(error => {
                     console.error(error)
@@ -30,16 +32,26 @@ export const Login = ({ onRegisterClicked, onUserLoggedIn }) => {
         }
     }
 
-    console.log('Login -> render')
+    console.log('Register -> render')
 
     return <div className="p-5">
         <i className="text-2xl">Logo</i>
 
         <div className="mt-2">
-            <h1 className="text-xl">Login</h1>
+            <h1 className="text-xl">Register</h1>
 
-            <form className="flex flex-col gap-4" onSubmit={handleLoginSubmit}>
+            <form className="mt-2 flex flex-col gap-4" onSubmit={handleRegisterSubmit}>
                 <div className="flex flex-col gap">
+                    <label htmlFor="name">name</label>
+                    <input className="border-2 px-1" type="text" id="name" name="name" placeholder="your name" />
+                </div>
+
+                <div className="flex flex-col gap">
+                    <label htmlFor="email">email</label>
+                    <input className="border-2 px-1" type="email" id="email" name="email" placeholder="your email" />
+                </div>
+
+                 <div className="flex flex-col gap">
                     <label htmlFor="username">Username</label>
                     <input className="border-2 px-1" type="text" id="username" name="username" placeholder="your username" />
                 </div>
@@ -50,9 +62,9 @@ export const Login = ({ onRegisterClicked, onUserLoggedIn }) => {
                 </div>
 
                 <div className="flex justify-between">
-                    <a className="underline" href="#" onClick={handleRegisterClick}>Register</a>
+                    <a className="underline" href="#" onClick={handleLoginClick}>Login</a>
 
-                    <button className="bg-black text-white px-2" type="submit">Login</button>
+                    <button className="bg-black text-white px-2" type="submit">Register</button>
                 </div>
             </form>
         </div>
