@@ -1,6 +1,10 @@
 import { logic } from '../logic'
 
-export const Register  = ({ onLoginClicked, onUserRegistered  }) => {
+import { useContext } from '../context'
+
+export const Register = ({ onLoginClicked, onUserRegistered }) => {
+    const { alert } = useContext()
+
     const handleLoginClick = () => onLoginClicked()
 
     const handleRegisterSubmit = event => {
@@ -42,22 +46,22 @@ export const Register  = ({ onLoginClicked, onUserRegistered  }) => {
 
             <form className="mt-2 flex flex-col gap-4" onSubmit={handleRegisterSubmit}>
                 <div className="flex flex-col gap">
-                    <label htmlFor="name">name</label>
-                    <input className="border-2 px-1" type="text" id="name" name="name" placeholder="your name" />
+                    <label htmlFor="name">Name</label>
+                    <input className="border-2 px-1" type="text" id="name" name="name" placeholder="your full name" />
                 </div>
 
                 <div className="flex flex-col gap">
-                    <label htmlFor="email">email</label>
-                    <input className="border-2 px-1" type="email" id="email" name="email" placeholder="your email" />
+                    <label htmlFor="email">E-mail</label>
+                    <input className="border-2 px-1" type="email" id="email" name="email" placeholder="your e-mail" />
                 </div>
 
-                 <div className="flex flex-col gap">
+                <div className="flex flex-col gap">
                     <label htmlFor="username">Username</label>
                     <input className="border-2 px-1" type="text" id="username" name="username" placeholder="your username" />
                 </div>
 
                 <div className="flex flex-col gap">
-                    <label htmlFor="password">password</label>
+                    <label htmlFor="password">Password</label>
                     <input className="border-2 px-1" type="password" id="password" name="password" placeholder="your password" />
                 </div>
 

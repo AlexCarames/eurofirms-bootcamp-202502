@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 
-import { Post } from './Post'
-
 import { logic } from '../../logic'
 
+import { Post } from './Post'
+import { useContext } from '../../context'
+
+
 export const Posts = () => {
+    const { alert } = useContext()
+
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
@@ -13,13 +17,14 @@ export const Posts = () => {
                 .then(posts => {
                     setPosts(posts)
                 })
-                .catch(error =>{
+                .catch(error => {
                     console.error(error)
+
                     alert(error.message)
                 })
-            
-
         } catch (error) {
+            console.error(error)
+
             alert(error.message)
         }
     }, [])
@@ -32,12 +37,12 @@ export const Posts = () => {
                 })
                 .catch(error => {
                     console.error(error)
+
                     alert(error.message)
                 })
-//const posts = logic.getPosts()
-//setPosts(posts)
-
         } catch (error) {
+            console.error(error)
+
             alert(error.message)
         }
     }
