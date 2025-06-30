@@ -34,6 +34,7 @@ posts.push({
     date: new Date(2024, 0, 11, 10, 0).toISOString(),
     likes: [],
 });
+
 postsCount++
 posts.push({
     id: "post-" + postsCount,

@@ -4,7 +4,7 @@ import cors from 'cors'
 
 import { usersRouter } from './routes/usersRouter.js'
 import { postsRouter } from './routes/postsRouter.js'
-import { errorHandler } from './middlewares/errorHandler.js'
+import { errorHandler } from './middlewares/errorHadler.js'
 
 const { MONGO_URL, PORT } = process.env
 
